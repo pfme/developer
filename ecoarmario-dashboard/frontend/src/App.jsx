@@ -1,6 +1,3 @@
-import ClientForm from './pages/ClientForm';
-import Roulette from './pages/Roulette';
-```javascript
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { WebSocketProvider } from './context/WebSocketContext';
@@ -8,6 +5,8 @@ import LiveDashboard from './pages/LiveDashboard';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminDashboard from './pages/AdminDashboard';
 import CRM from './pages/CRM';
+import ClientForm from './pages/ClientForm';
+import Roulette from './pages/Roulette';
 
 function App() {
   return (
@@ -16,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LiveDashboard />} />
           <Route path="/live" element={<LiveDashboard />} />
-          
+
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
             {/* Note: In Layout I linked to /crm, but here I should probably nest it under /admin or make /crm root-level. 
@@ -26,11 +25,11 @@ function App() {
                 Layout has links to '/crm'. Let's support that.
             */}
           </Route>
-          
+
           <Route path="/crm" element={<AdminLayout />}>
-             <Route index element={<CRM />} />
+            <Route index element={<CRM />} />
           </Route>
-          
+
           <Route path="/form" element={<ClientForm />} />
           <Route path="/live/ruleta" element={<Roulette />} />
         </Routes>
@@ -40,4 +39,4 @@ function App() {
 }
 
 export default App;
-```
+
