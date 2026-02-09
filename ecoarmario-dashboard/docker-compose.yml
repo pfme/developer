@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  ecoarmario-backend:
+    build: ./backend
+    container_name: ecoarmario-api
+    ports:
+      - "8099:8000"
+    environment:
+      - GOOGLE_SHEET_ID=1SpzOG6_YPWUkmyFIAbmXM-6mapiIIfMTKoJrWu1FcXk
+      - JWT_SECRET_KEY=supersecretkeychangeinproduction
+      - CORS_ORIGINS=http://localhost:3000,https://ecoview.atleia.lat
+    volumes:
+      - ./backend/app:/app/app
+      - ./backend/data:/app/data
+    restart: unless-stopped
+    networks:
+      - ecoarmario-network
+
+  ecoarmario-frontend:
+    build: ./frontend
+    container_name: ecoarmario-web
+    ports:
+      - "3001:80"
+    environment:
+      - VITE_API_URL=http://localhost:8099
+      - VITE_WS_URL=ws://localhost:8099
+    depends_on:
+      - ecoarmario-backend
+    restart: unless-stopped
+    networks:
+      - ecoarmario-network
+
+networks:
+  ecoarmario-network:
+    driver: bridge
